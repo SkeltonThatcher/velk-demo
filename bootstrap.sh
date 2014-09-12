@@ -67,3 +67,5 @@ sudo /opt/logstash/bin/logstash -f /tmp/logstash-nginx.conf &
 
 sudo cp /vagrant/logstash.conf /etc/logstash/conf.d/
 sudo /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf &
+
+sudo touch /root/vagrantprovisioned
