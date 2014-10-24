@@ -3,7 +3,8 @@
 #if 'packages' directory exists attempt local package install
 #
 
-wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add - 
+#wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add - 
+apt-key add /vagrant/packages/GPG-KEY-elasticsearch 
 echo 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch.list 
 echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list 
 echo 'deb http://packages.elasticsearch.org/logstashforwarder/debian stable main' | sudo tee /etc/apt/sources.list.d/logstashforwarder.list 
@@ -35,7 +36,7 @@ sudo service elasticsearch start
 #Use local copy of kopf
 #--url file:///path/to/plugin --install plugin-name
 echo "Local kopf found, installing"
-sudo /usr/share/elasticsearch/bin/plugin --url file:///vagrant/packages/elasticsearch-kopf.zip lmenzes/elasticsearch-kopf
+sudo /usr/share/elasticsearch/bin/plugin -u file:///vagrant/packages/elasticsearch-kopf.zip --install lmenzes/elasticsearch-kopf
 
 # Install Kibana 
 
@@ -43,10 +44,9 @@ sudo /usr/share/elasticsearch/bin/plugin --url file:///vagrant/packages/elastics
 #wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz
 #Use local copy of kibana
 echo "Local Kibana found, installing"
-sudo cp /vagrant/packages/kibana-3.1.0.tar.gz /tmp
-tar zxvf /tmp/kibana-3.1.0.tar.gz 
+sudo tar zxf /vagrant/packages/kibana-3.1.0.tar.gz -C /usr/share/
+sudo ln -s /usr/share/kibana-3.1.0/ /usr/share/kibana3
 sleep 1
-sudo cp -pR /tmp/kibana-3.1.0 /usr/share/kibana3 
 sudo sed -i 's/hostname+":9200/hostname+":80/' /usr/share/kibana3/config.js 
 
 #wget https://github.com/elasticsearch/kibana/raw/master/sample/nginx.conf # This sometimes fails to connect over ssl file stored in repo
@@ -62,6 +62,10 @@ sudo cp /usr/share/kibana3/app/dashboards/logstash.json /usr/share/kibana3/app/d
 # Make elasticsearch start on startup-boot
 
 sudo update-rc.d elasticsearch defaults 95 10
+
+# Change timezone to Europe/London
+echo "Europe/Dublin" > /etc/timezone    
+dpkg-reconfigure -f noninteractive tzdata
 
 # Basic demo
 
