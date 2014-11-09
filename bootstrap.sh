@@ -1,5 +1,7 @@
 #!/usr/bin/env bash 
 #
+# If you want to install latest packages over network, rename or remove the 'packages' directory.
+
 if [ -d /vagrant/packages ] ; then
 
 ######## START Local install branch
