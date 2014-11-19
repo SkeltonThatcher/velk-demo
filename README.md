@@ -9,7 +9,7 @@ Install the latest VirtualBox, and Vagrant, this should be easy, ymmv.
 
 1. Create a directory under which to keep vagrant configs.
 2. Clone this repo, we assume you know how to do this as you're on github reading this....
-3. Add packages repo if you want to run in offline mode, i.e. no downloading from the internet for OS packages etc.
+3. Add packages repo (https://github.com/robthatcher/velk-demo-packages.git) if you want to run in offline mode, i.e. no downloading from the internet for OS packages etc.
 4. Start the machine, 'vagrant up' in the directory.
 
 Sit back for a few minutes depending on your net connection speed (fingers crossed), or machine speed if using offline mode.
