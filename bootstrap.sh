@@ -106,7 +106,9 @@ else
 	echo "VELK: Installing Kibana"
 	cd ~ 
 	wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz
-	udo sed -i 's/hostname+":9200/hostname+":80/' /usr/share/kibana3/config.js 
+	tar zxvf kibana-3.1.0.tar.gz 
+	sudo mv kibana-3.1.0 /usr/share/kibana3 
+	sudo sed -i 's/hostname+":9200/hostname+":80/' /usr/share/kibana3/config.js 
 
 	# Install one of Kopf or Head elasticsearch plugins
 	echo "VELK: Installing kopf elasticsearch plugin"
