@@ -14,7 +14,7 @@ Install the latest VirtualBox, and Vagrant, this should be easy, ymmv.
 
 3. The bootstrap.sh script will default to caching required binary packages locally inside the 'packages' directory, allowing you to run offline, i.e. without network access. If you want to repeat the demo, as long as the 'packages' directory is in place no downloads will be required.
 	
-4. If you want to install directly from the the internenet, manually remove the 'packages' directory, all will magically be pulled in live on yor internet connection. 
+4. If you want to install directly from the the internnet, manually remove the 'packages' directory, all will magically be pulled in live on yor internet connection. 
 
 5. If you didn't already, start the machine by using, 'vagrant up' in the directory.
 
