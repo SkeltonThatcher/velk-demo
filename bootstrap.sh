@@ -160,5 +160,9 @@ sudo chmod +x /tmp/logmessagegenerator.sh
 sudo /tmp/logmessagegenerator.sh &
 
 # Add config to listen to own syslog and nginx files
-sudo cp /vagrant/logstash.conf /etc/logstash/conf.d/
+sudo cp /vagrant/conf/logstash.conf /etc/logstash/conf.d/
 sudo /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf &
+
+echo "VELK: Point a web browser at http://localhost:9200/_plugin/kopf/ to see elasticsearch running"
+echo ""
+echo "VELK: The gui is located at http://172.28.... something, use 'vagrant ssh' to login to the vm and check"
