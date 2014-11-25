@@ -10,7 +10,7 @@ Install the latest VirtualBox, and Vagrant, this should be easy, ymmv.
 
 1. Create a directory under which to keep vagrant configs.
 
-2. Clone the repo to the previously created directory using "https://github.com/SkeltonThatcher/velk-demo" (There may be also an in-dev version of the repo at "https://github.com/robthatcher/velk-demo.git"
+2. Clone the repo to the previously created directory using "https://github.com/SkeltonThatcher/velk-demo" (There may be also an in-dev version of the repo at "https://github.com/robthatcher/velk-demo.git")
 
 3. The bootstrap.sh script will default to caching required binary packages locally inside the 'packages' directory, allowing you to run offline, i.e. without network access. If you want to repeat the demo, as long as the 'packages' directory is in place no downloads will be required.
 	
