@@ -8,14 +8,17 @@ Guidance
 Install the latest VirtualBox, and Vagrant, this should be easy, ymmv.
 
 1. Create a directory under which to keep vagrant configs.
-2. Clone this repo, we assume you know how to do this as you're on github reading this....
-3. Add packages repo (https://github.com/robthatcher/velk-demo-packages.git) if you want to run in offline mode, i.e. no downloading from the internet for OS packages etc.
-4. Start the machine, 'vagrant up' in the directory.
+2. Clone this repo to the previously created directory using "git clone https://github.com/robthatcher/velk-demo.git"
+3. Performing a "Vagrant Up" will begin provisioning the machine, and will default to caching required binary packages locally inside the 'packages' directory, allowing you to run offline, i.e. without network access subsequently if you want to repeat the demo.
+	
+4. Alteratively you could clone the repo for holding the packages which is here https://github.com/robthatcher/velk-demo-packages.git 
+
+5. If you didn't already, start the machine by using, 'vagrant up' in the directory.
 
 Sit back for a few minutes depending on your net connection speed (fingers crossed), or machine speed if using offline mode.
 
 A successful build (i.e. deployment and provision) resutlts in being able browse kibana and elasticsearch, 
-the setup captures local syslog, messages and nginx logs (from the vm)
+the setup captures local syslog, messages from the logmessagegenerator.sh script and nginx logs (from the vm), meaning using the webui creates new logging.
 
 Notes
 
