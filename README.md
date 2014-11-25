@@ -24,8 +24,6 @@ Install the latest VirtualBox, and Vagrant, this should be easy, ymmv.
 Notes
 -----
 
-What do I get?
-
 A successful build (i.e. deployment and provision) resutlts in being able browse kibana and elasticsearch eweb interfaces.
 
 The setup captures local syslog, messages from the logmessagegenerator.sh script and nginx logs (from the vm), meaning using the webui creates new log entries which then show up in the ELK interface.
