@@ -26,13 +26,13 @@ Notes
 
 What do I get?
 
-	A successful build (i.e. deployment and provision) resutlts in being able browse kibana and elasticsearch eweb interfaces.
+A successful build (i.e. deployment and provision) resutlts in being able browse kibana and elasticsearch eweb interfaces.
 
-	The setup captures local syslog, messages from the logmessagegenerator.sh script and nginx logs (from the vm), meaning using the webui creates new log entries which then show up in the ELK interface.
+The setup captures local syslog, messages from the logmessagegenerator.sh script and nginx logs (from the vm), meaning using the webui creates new log entries which then show up in the ELK interface.
 
-	If you need the 'packages' repo, it cab cloned from github, see - http://github.com/robthatcher/velk-demo-packages.git 
+If you need the 'packages' repo, it can cloned from github, see - http://github.com/robthatcher/velk-demo-packages.git 
 
-	Logging into VM
+	Logging into the VM
 
 	1. Credentials to login the box - login : vagrant , password : vagrant
 	2. Login method 1 : vagrant ssh
@@ -43,7 +43,7 @@ What do I get?
         	Elasticsearch GUI : http://localhost:9200/_plugin/kopf/
         	ELK GUI : http://yourinternal.virtualbox.ip/
 
-		N.B. You may have to login to the box to check the IP address of the interface which is serving ELK.
+N.B. You may have to login to the box to check the IP address of the interface which is serving ELK.
 
 Credits
 -------
