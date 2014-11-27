@@ -113,7 +113,7 @@ else
 	# Install one of Kopf or Head elasticsearch plugins
 	echo "VELK: Installing kopf elasticsearch plugin"
 	#sudo /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head
-	sudo /usr/share/elasticsearch/bin/plugin -install lmenzes/elasticsearch-kopf
+	sudo /usr/share/elasticsearch/bin/plugin -install lmenezes/elasticsearch-kopf
 
 	######## END Net install branch
 
