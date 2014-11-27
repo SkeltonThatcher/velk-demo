@@ -40,7 +40,7 @@ If you need the 'packages' repo, it can cloned from github, see - http://github.
 	Access the platform using the following URLs
 
         	Elasticsearch GUI : http://localhost:9200/_plugin/kopf/
-        	ELK GUI : http://yourinternal.virtualbox.ip/
+        	ELK GUI : http://172.28.128.3/
 
 N.B. You may have to login to the box to check the IP address of the interface which is serving ELK.
 
