@@ -13,15 +13,15 @@ config.vm.network :forwarded_port, guest: 9200, host: 9200
 
 config.vm.network :forwarded_port, guest: 2200, host: 2020
 
-config.vm.network "private_network", type: "dhcp" 
+config.vm.network "private_network", ip: "172.28.128.3" 
 
 config.ssh.forward_agent = true # If true, then any SSH connections made will enable agent forwarding. # Default value: false #
 
 config.vm.provider "virtualbox" do |vb| 
 
-        vb.name = "velk-demo_vm" # Don't boot with headless mode 
-        vb.gui = true # Tweak the below value to adjust RAM 
-        vb.memory = 3048 # Tweak the number of processors below 
+        vb.name = "velk-demo_vm" # Name of the virtualbox machine 
+        vb.gui = true # Don't boot in headless mode
+        vb.memory = 3048 # Amount of memory in MB to allocate the VM
         vb.cpus = 2 # Number of CPUs in the VirtualBox
 end 
 
