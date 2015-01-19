@@ -85,6 +85,10 @@ else
 	# Update apt 
 	echo "VELK: Updating package manager"
 	sudo apt-get update 
+	
+	# Install git
+	echo "VELK: Installing git"
+	sudo apt-get install git -y
 
 	# Install java & nginx
 	echo "VELK: Installing java, nginx and depedencies"
@@ -167,4 +171,4 @@ sudo /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf &
 
 echo "VELK: Point a web browser at http://localhost:9200/_plugin/kopf/ to see elasticsearch running"
 echo ""
-echo "VELK: The gui is located at http://172.28.... something, use 'vagrant ssh' to login to the vm and check"
+echo "VELK: The ELK ui is located at http://172.28.128.3 "
