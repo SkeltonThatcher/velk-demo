@@ -8,6 +8,8 @@ Guidance
 
 Install the latest VirtualBox, and Vagrant, this should be easy, ymmv.
 
+0. Ensure your VirtualBox setup has a 172.28.128.0 /24 host only network which we will use to present the ELK interface.
+
 1. Create a directory under which to keep vagrant configs.
 
 2. Clone the repo to the previously created directory using "git clone https://github.com/SkeltonThatcher/velk-demo.git"
