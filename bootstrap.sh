@@ -2,8 +2,17 @@
 #
 # If you want to install latest packages over network, rename or remove the 'packages' directory.
 
-if [ -d /vagrant/packages ] ; then
+# This is a demo, we purposefully spew out loads of info to stdout
 
+# Rob Thatcher 
+
+if [ -d /vagrant/packages ] ; then
+	
+	echo ""
+	echo " ** OFFLINE INSTALL - Remove 'packages' directory for online - Ctrl-C to stop : Pausing for 10 seconds ** "
+	echo ""
+	sleep 10
+	
 	if [ ! -e /vagrant/packages/.remoterepotrue ] ; then
 
 		echo "VELK: Packages repo needs first time download"
@@ -12,9 +21,11 @@ if [ -d /vagrant/packages ] ; then
 		wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-ek-packages.tar.gz
 		wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-java-packages.tar.gz
 		wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-logstash-packages.tar.gz
+		wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-git.tar.gz
 		tar -xf velk-ek-packages.tar.gz 
 		tar -xf velk-java-packages.tar.gz 
 		tar -xf velk-logstash-packages.tar.gz 
+		tar -xf velk-git.tar.gz
 		touch /vagrant/packages/.remoterepotrue
 	else
 		echo "VELK: Offline install support already present, beginning install and configuration"
@@ -66,6 +77,10 @@ if [ -d /vagrant/packages ] ; then
 
 	echo "VELK: Installng local kopf plugin"
 	sudo /usr/share/elasticsearch/bin/plugin -u file:///vagrant/packages/install-elasticsearch-kibana/elasticsearch-kopf.zip --install lmenzes/elasticsearch-kopf
+
+	# Install local git
+	echo "VELK: Installing git"
+	dpkg -i /vagrant/packages/install-git/*.deb
 
 	######## END local install branch
 else
