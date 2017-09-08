@@ -1,72 +1,71 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 #
 # If you want to install latest packages over network, rename or remove the 'packages' directory.
-
 # This is a demo, we purposefully spew out loads of info to stdout
+# Rob Thatcher
 
-# Rob Thatcher 
+echo -e "\nBeginning bootstrap.sh script RUN/n/n"
+sleep 5
 
 if [ -d /vagrant/packages ] ; then
-	
 	echo ""
 	echo " ** OFFLINE INSTALL - Remove 'packages' directory for online - Ctrl-C to stop : Pausing for 10 seconds ** "
 	echo ""
 	sleep 10
-	
-	if [ ! -e /vagrant/packages/.remoterepotrue ] ; then
 
-		echo "VELK: Packages repo needs first time download"
-		# if git exists on machine git clone repo in packages dir {TBD}  else pull in static tar ball via wget
-		cd /vagrant/packages/
-		wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-ek-packages.tar.gz
-		wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-java-packages.tar.gz
-		wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-logstash-packages.tar.gz
-		wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-git.tar.gz
-		tar -xf velk-ek-packages.tar.gz 
-		tar -xf velk-java-packages.tar.gz 
-		tar -xf velk-logstash-packages.tar.gz 
-		tar -xf velk-git.tar.gz
-		touch /vagrant/packages/.remoterepotrue
-	else
-		echo "VELK: Offline install support already present, beginning install and configuration"
-	fi
+		if [ ! -e /vagrant/packages/.remoterepotrue ] ; then
+			echo "VELK: Packages repo needs first time download"
+			# if git exists on machine git clone repo in packages dir {TBD} else pull in static tar ball via wget
+			cd /vagrant/packages/
+			wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-ek-packages.tar.gz
+			wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-java-packages.tar.gz
+			wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-logstash-packages.tar.gz
+			wget https://github.com/robthatcher/velk-demo-packages/raw/master/tarballs/velk-git.tar.gz
+			tar -xf velk-ek-packages.tar.gz
+			tar -xf velk-java-packages.tar.gz
+			tar -xf velk-logstash-packages.tar.gz
+			tar -xf velk-git.tar.gz
+			touch /vagrant/packages/.remoterepotrue
+		else
+			echo "VELK: Offline install support already present, beginning install and configuration"
+		fi
 
 	######## START Local install branch
 
 	echo -e "VELK: Locally cached install triggered\n"
 
-	# Add Elasticsearch key to apt 
+	# Add Elasticsearch key to apt
 	apt-key add /vagrant/data/GPG-KEY-elasticsearch
 	echo 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch.list
 	echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list
 	echo 'deb http://packages.elasticsearch.org/logstashforwarder/debian stable main' | sudo tee /etc/apt/sources.list.d/logstashforwarder.list
 
-	# Install local java 
+	# Install local java
 	echo "VELK: Installing local Java and Nginx"
 	dpkg -i /vagrant/packages/install-java/*.deb
-	
-	# Install local elasticsearch  
+
+	# Install local elasticsearch
 	echo "VELK: Installing local Elasticsearch"
 	dpkg -i /vagrant/packages/install-elasticsearch-kibana/*.deb
 
-	# Install local logstash 
+	# Install local logstash
 	echo "VELK: Installing local Logstash and Logstash forwarder"
 	dpkg -i /vagrant/packages/install-logstash/*.deb
 
 	# Install local logstash forwarder init script
 	echo "VELK: Installing local Logstash init script"
-	cd /etc/init.d/ 
-	sudo cp /vagrant/scripts/logstash-forwarder.init logstash-forwarder 
-	sudo chmod +x logstash-forwarder 
-	sudo update-rc.d logstash-forwarder defaults 
-	sudo service elasticsearch start 
+	cd /etc/init.d/
+	sudo cp /vagrant/scripts/logstash-forwarder.init logstash-forwarder
+	sudo chmod +x logstash-forwarder
+	sudo update-rc.d logstash-forwarder defaults
+	sudo service elasticsearch start
 
 	# Install local copy of kibana
 	echo "VELK: Installing local Kibana"
 	sudo tar zxf /vagrant/packages/install-elasticsearch-kibana/kibana-3.1.0.tar.gz -C /usr/share/
 	sudo ln -s /usr/share/kibana-3.1.0/ /usr/share/kibana3
 	sleep 1
-	sudo sed -i 's/hostname+":9200/hostname+":80/' /usr/share/kibana3/config.js 
+	sudo sed -i 's/hostname+":9200/hostname+":80/' /usr/share/kibana3/config.js
 
 	# Install one of Kopf or Head elasticsearch plugins
 
@@ -83,7 +82,9 @@ if [ -d /vagrant/packages ] ; then
 	dpkg -i /vagrant/packages/install-git/*.deb
 
 	######## END local install branch
+
 else
+
 	######## START Net install branch
 
 	echo "VELK: Net install beginning"
@@ -97,37 +98,37 @@ else
 	echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list
 	echo 'deb http://packages.elasticsearch.org/logstashforwarder/debian stable main' | sudo tee /etc/apt/sources.list.d/logstashforwarder.list
 
-	# Update apt 
+	# Update apt
 	echo "VELK: Updating package manager"
-	sudo apt-get update 
-	
+	sudo apt-get update
+
 	# Install git
 	echo "VELK: Installing git"
 	sudo apt-get install git -y
 
 	# Install java & nginx
 	echo "VELK: Installing java, nginx and depedencies"
-	sudo apt-get install openjdk-7-jre-headless nginx apache2-utils -y 
+	sudo apt-get install openjdk-7-jre-headless nginx apache2-utils -y
 
 	# Install elasticsearch and logstash
 	echo "VELK: Installing Elasticsearch, Logstash and forwarder"
-	sudo apt-get install elasticsearch logstash logstash-forwarder -y 
+	sudo apt-get install elasticsearch logstash logstash-forwarder -y
 
-	# Configure logstash forwarder 
+	# Configure logstash forwarder
 	echo "VELK: Configuring Logstash forwarder"
 	cd /etc/init.d/
 	sudo wget https://raw.githubusercontent.com/elasticsearch/logstash-forwarder/master/logstash-forwarder.init -O logstash-forwarder
-	sudo chmod +x logstash-forwarder 
-	sudo update-rc.d logstash-forwarder defaults 
-	sudo service elasticsearch start 
+	sudo chmod +x logstash-forwarder
+	sudo update-rc.d logstash-forwarder defaults
+	sudo service elasticsearch start
 
-	# Install Kibana 
+	# Install Kibana
 	echo "VELK: Installing Kibana"
-	cd ~ 
+	cd ~
 	wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz
-	tar zxvf kibana-3.1.0.tar.gz 
-	sudo mv kibana-3.1.0 /usr/share/kibana3 
-	sudo sed -i 's/hostname+":9200/hostname+":80/' /usr/share/kibana3/config.js 
+	tar zxvf kibana-3.1.0.tar.gz
+	sudo mv kibana-3.1.0 /usr/share/kibana3
+	sudo sed -i 's/hostname+":9200/hostname+":80/' /usr/share/kibana3/config.js
 
 	# Install one of Kopf or Head elasticsearch plugins
 	echo "VELK: Installing kopf elasticsearch plugin"
@@ -142,12 +143,12 @@ fi
 
 # Configure Nginx
 #This frequently fails to connect over so I've mvoed the file to the repo, and copy if via local filesystem, install steps retained for ref.
-#wget https://github.com/elasticsearch/kibana/raw/master/sample/nginx.conf 
+#wget https://github.com/elasticsearch/kibana/raw/master/sample/nginx.conf
 #sudo cp nginx.conf /etc/nginx/sites-available/default
 
 echo "VELK: Installing local Nginx.conf"
-sudo cp /vagrant/conf/vELK-nginx.conf /etc/nginx/sites-available/default 
-sudo service nginx restart 
+sudo cp /vagrant/conf/vELK-nginx.conf /etc/nginx/sites-available/default
+sudo service nginx restart
 
 # Make logstash dash default
 echo "VELK: Setting default kibana dashboard"
@@ -159,12 +160,12 @@ sudo update-rc.d elasticsearch defaults 95 10
 
 # Change timezone to Europe/London
 echo "VELK: Setting Timezone to Europe/London"
-echo "Europe/Dublin" > /etc/timezone    
+echo "Europe/Dublin" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
 
 ####### Setup demo #########
 
-# If you want to Start up a logstash pipeline which outputs to kibana, use the following command line 
+# If you want to Start up a logstash pipeline which outputs to kibana, use the following command line
 # $ /opt/logstash/bin/logstash -e 'input { stdin { } } output { elasticsearch { host => localhost } }'
 
 #sudo echo "/opt/logstash/bin/logstash -e 'input { stdin { } } output { elasticsearch { host => localhost } }'" > /root/lstmsg
